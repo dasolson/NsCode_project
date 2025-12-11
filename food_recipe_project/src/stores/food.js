@@ -85,6 +85,9 @@ export default{
     mutations : {
         SET_FOOD_DATA(state, payload){
             state.food_data = payload
+        },
+        SET_FOOD_DETAIL(state, payload){
+            state.food_detail = payload
         }
     },
     // 서버와 연결 => 요청 담당
@@ -99,6 +102,15 @@ export default{
                 commit('SET_FOOD_DATA', response.data)
                 // this.food_data = response.data
                 // commit => mutation에 있는 함수 호출
+            })
+        },
+        async foodDetailData({commit}, fno){
+            console.log("foodDetailData Call : " + fno)
+            await axios.get("http://localhost/food/detail_vue/", {
+                params : {fno}
+            }).then(response=>{
+                console.log(response.data)
+                commit('SET_FOOD_DETAIL', response.data)
             })
         }
     }

@@ -3,12 +3,12 @@
         <div class="row">
             <div class="col-md-3" v-for="(vo, index) in food_data.list" :key="index">
                 <div class="thumbnail">
-                    <a href="#">
+                    <router-link :to="{name : 'food_detail', params : {fno : vo.fno}}">
                         <img :src="vo.poster" :title="vo.address" style="width:240px; height: 130px">
                         <div class="caption">
                             <p>{{vo.name}}</p>
                         </div>
-                    </a>
+                    </router-link>
                 </div>
             </div>
         </div>  
