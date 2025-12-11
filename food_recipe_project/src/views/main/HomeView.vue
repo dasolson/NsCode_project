@@ -14,9 +14,10 @@
         </div>  
         <div class="row text-center" style="margin-top: 20px">
 			<ul class="pagination">
-				<li v-if="food_data.startPage > 1"><a class="a-link">&laquo;</a></li>
-				<li v-for="i in range(food_data.startPage, food_data.endPage)" :key="i" :class="food_data.curpage == i?'active':''">{{i}}<a class="a-link"></a></li>
-				<li v-if="food_data.endPage < food_data.totalpage"><a class="a-link">&raquo;</a></li>
+				<li v-if="food_data.startPage > 1"><a class="a-link" @click="foodListData(food_data.startPage-1)">&laquo;</a></li>
+				<li v-for="i in range(food_data.startPage, food_data.endPage)" :key="i" 
+                    :class="food_data.curpage == i?'active':''"><a class="a-link" @click="foodListData(i)">{{i}}</a></li>
+				<li v-if="food_data.endPage < food_data.totalpage"><a class="a-link" @click="foodListData(food_data.endPage+1)">&raquo;</a></li>
 			</ul>
 		</div>      
     </div>
@@ -82,5 +83,8 @@ p {
 	overflow: hidden;
 	white-space: nowrap;
 	text-overflow: ellipsis;
+}
+.a-link:hover {
+    cursor: pointer;
 }
 </style>
