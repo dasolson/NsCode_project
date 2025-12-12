@@ -40,7 +40,7 @@ import axios from 'axios'
         => 동기적 함수
         => store.commit("increment")
         => store.commit("decrement")
-                 ------ mutation함수 호출
+                ------ mutation함수 호출
     3. actions : 비동기적, mutation함수 호출
         => 서버와 통신 => 비동기적으로 작업 수행
         => 로직
@@ -79,7 +79,8 @@ export default{
     // 변경이 가능한 변수 => prop (변경이 안된다)
     state : {
         food_data : {}, // Map
-        food_detail : {} // VO
+        food_detail : {}, // VO
+        find_data : {} // Arry [], object {}
     },
     // 수정, 삭제, 추가 
     mutations : {
@@ -88,9 +89,58 @@ export default{
         },
         SET_FOOD_DETAIL(state, payload){
             state.food_detail = payload
+        },
+        SET_FIND_DATA(state, payload){
+            state.find_data = payload
         }
     },
     // 서버와 연결 => 요청 담당
+    /*
+        vuex의 구성요소
+            => 데이터를 모아서 관리
+            => 모든 vue 파일에서 사용이 가능하게 공통 데이터                                                
+            1. state     : vuex에서 관리하는 실제 데이터
+            2. mutations : state를 동기적으로 저장 (변경, 삭제)
+            3. actions   : 서버를 연결해서 데이터 처리
+                            axios
+            4. modules   : store에 저장되는 영역(분리해서 관리)
+                => store안에 존재
+
+        순서
+            component => .vue
+            폴더
+                components : 공통기반 (메뉴, 풋터)
+                views      : 각 화면
+                router     : 화면 이동
+                store      : 공통 데이터 관리
+            상태관리 프로그램
+            ---- 데이터가 변경 될 때
+            ---- Vue / React     
+            1. component : 이벤트 발생, 시작과 동시에 처리
+                    | dispatch('foodListData', 매개변수)
+            2. actions   : 요청에 대한 처리
+                    | commit('함수명)
+            3. mutations : state에 저장 후 store에 저장
+            4. state     : 공통으로 사용되는 데이터 => 화면에 반영
+            5. 화면 반영     
+            
+            * actions   : 비동기적으로 처리
+                            async foodListData()
+            * mutations : 동기적으로 처리
+            * state     : 프로그램 실행 동안 유지
+                => static 변수
+        구조
+            public : 이미지, js, css, html
+                => index.html이 실행
+            src    : js, ts, jsx, tsx
+                            ----------
+                            | xml 파일 => js + xml (React)
+                => JavaScript, ThymeScript
+                                => 컴파일 : 자바스크립트
+            => App.vue / main.js
+                | main    | 설정 파일
+                            => router, mount, vuex, store        
+    */
     actions : {
         async foodListData({commit}, page){
             console.log('foodListData Call : ' + page)
@@ -111,6 +161,24 @@ export default{
             }).then(response=>{
                 console.log(response.data)
                 commit('SET_FOOD_DETAIL', response.data)
+            })
+        },
+        /*
+            {
+                column : 'all',
+                page : 1,
+                ss : '검색어'
+            }
+        */
+        async foodFindData({commit},{column,page,ss}){
+            console.log("foodFindData:"+column+" "+page+" "+ss)
+            await axios.get('http://localhost/food/find_vue/',{
+                params:{
+                    column,page,ss
+                }
+            }).then(response=>{
+                console.log(response.data)
+                commit('SET_FIND_DATA',response.data)
             })
         }
     }
