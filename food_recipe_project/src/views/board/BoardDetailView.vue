@@ -18,7 +18,7 @@
 					</tr>
 					<tr>
 						<th width="20%" class="text-center danger">제목</th>
-						<td colspan="3" th:text="${vo.subject}"></td>						
+						<td colspan="3" v-text="vo.subject"></td>						
 					</tr>
 					<tr>
 						<td colspan="4" class="text-left" valign="top" height="250">
@@ -27,8 +27,8 @@
 					</tr>
 					<tr>
 						<td colspan="4" class="text-right">
-							<a href="#" class="btn btn-sm btn-info">수정</a>
-							<a href="#" class="btn btn-sm btn-warning">삭제</a>
+							<button class="btn btn-sm btn-info" @click="goUpdate()">수정</button>
+							<button class="btn btn-sm btn-warning">삭제</button>
 							<button type="button" class="btn btn-sm btn-success" @click="goList()">목록</button>
 						</td>
 					</tr>
@@ -51,6 +51,10 @@
     })
     const goList=()=>{
         router.push('/board/list')
+    }
+    // PathValiable
+    const goUpdate=() => {
+        router.push(`/board/update/${route.params.no}`)
     }
     /*
             {

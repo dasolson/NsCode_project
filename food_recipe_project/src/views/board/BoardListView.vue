@@ -6,7 +6,7 @@
 				<tbody>
 					<tr>
 						<td class="text-left">
-							<a href="/board/insert" class="btn btn-sm btn-warning">새글</a>
+							<router-link to="/board/insert" class="btn btn-sm btn-warning">새글</router-link>
 						</td>
 					</tr>
 				</tbody>
@@ -24,7 +24,7 @@
 				<tbody>
 					<tr v-for="(vo, key) in board_list.list" :key="key" class="dataTr" @click="goDetail(vo.no)">
 						<td class="text-center" width="10%">{{vo.no}}</td>
-						<td width="45%" class="text-left">{{vo.subject}}</td>
+						<td class="text-left" width="45%" >{{vo.subject}}</td>
 						<td class="text-center" width="15%">{{vo.name}}</td>
 						<td class="text-center" width="20%">{{vo.dbday}}</td>
 						<td class="text-center" width="10%" v-text="vo.hit"></td>
